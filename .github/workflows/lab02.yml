@@ -5,9 +5,9 @@ name: lab02
 
 on:
   push:
-    paths:
-      - 'lab02/**'
-
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 jobs:
 
   build:
