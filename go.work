@@ -1,3 +1,6 @@
 go 1.21.1
 
-use ./lab01
+use (
+	./lab01
+	./lab02
+)
