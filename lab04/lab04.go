@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"log"
-
 	"net/http"
 	"strconv"
 )
@@ -47,7 +46,7 @@ func calculate(op string, num1, num2 int) (int, string) {
 		return lcm(num1, num2), symbol
 
 	}
-	return 0, "Error!"
+	return 0, ""
 }
 
 func gcd(a, b int) int {
@@ -68,7 +67,7 @@ func Calculator(w http.ResponseWriter, r *http.Request) {
 	num2, err2 := strconv.Atoi(r.FormValue("num2"))
 
 	if err1 != nil || err2 != nil {
-		// 参数格式错误，可以执行相应的操作
+
 		http.ServeFile(w, r, "error.html")
 		return
 	}
@@ -90,7 +89,7 @@ func Calculator(w http.ResponseWriter, r *http.Request) {
 		Expression: expression,
 	}
 
-	if symbol == "Error!" {
+	if symbol == "" {
 		http.ServeFile(w, r, "error.html")
 	} else {
 		err := template.Must(template.ParseFiles("index.html")).Execute(w, data)
