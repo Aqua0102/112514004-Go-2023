@@ -75,7 +75,7 @@
 
         function checkPrime() {
             const inputValue = document.getElementById('value').value;
-            const result = CheckPrime(inputValue);
+            const result = CheckPrime(String(inputValue));
             document.getElementById('answer').innerText = result;
         }
     </script>

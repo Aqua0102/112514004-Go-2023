@@ -2,7 +2,6 @@ package main
 
 import (
 	"math/big"
-	"strconv"
 	"syscall/js"
 )
 
@@ -17,16 +16,13 @@ func CheckPrime(this js.Value, p []js.Value) interface{} {
 		return js.ValueOf("Invalid argument count")
 	}
 
-	// Convert the argument to a Go integer
-	num, err := strconv.Atoi(p[0].String())
-	if err != nil {
+	num, ok := new(big.Int).SetString(p[0].String(), 10)
+	if !ok {
 		return js.ValueOf("Invalid argument type")
 	}
 
-	// Check if the number is prime
 	result := isPrime(num)
 
-	// Return the result to JavaScript
 	if result {
 		return js.ValueOf("It's prime")
 	} else {
@@ -34,12 +30,10 @@ func CheckPrime(this js.Value, p []js.Value) interface{} {
 	}
 }
 
-func isPrime(n int) bool {
-	if n <= 1 {
+func isPrime(n *big.Int) bool {
+	if n.Cmp(big.NewInt(1)) <= 0 {
 		return false
 	}
 
-	// Use math/big package to check primality
-	bigNum := big.NewInt(int64(n))
-	return bigNum.ProbablyPrime(0)
+	return n.ProbablyPrime(0)
 }
