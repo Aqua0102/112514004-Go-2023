@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <meta charset="utf-8" />
     <style>
@@ -55,7 +56,7 @@
             background-color: #222e7a;
         }
 
-        .container > div:nth-child(2) {
+        .container>div:nth-child(2) {
             min-height: 1.2rem;
         }
 
@@ -71,17 +72,25 @@
         WebAssembly.instantiateStreaming(fetch('wasm/lib.wasm'), go.importObject).then(result => {
             go.run(result.instance)
         })
+
+        function checkPrime() {
+            const inputValue = document.getElementById('value').value;
+            const result = CheckPrime(inputValue);
+            document.getElementById('answer').innerText = result;
+        }
     </script>
 </head>
+
 <body>
-<div class="container">
-    <div>
-        <input type="number" id="value" />
-        <button id="check" onclick="CheckPrime()">Check Prime</button>
+    <div class="container">
+        <div>
+            <input type="number" id="value" />
+            <button id="check" onclick="checkPrime()">Check Prime</button>
+        </div>
+        <div>
+            <span id="answer"></span>
+        </div>
     </div>
-    <div>
-        <span id="answer"></span>
-    </div>
-</div>
 </body>
+
 </html>
