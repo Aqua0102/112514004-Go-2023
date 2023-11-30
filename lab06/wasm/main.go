@@ -16,7 +16,8 @@ func CheckPrime(this js.Value, p []js.Value) interface{} {
 		return js.ValueOf("Invalid argument count")
 	}
 
-	num, ok := new(big.Int).SetString(p[0].String(), 10)
+	numStr := p[0].String()
+	num, ok := new(big.Int).SetString(numStr, 10)
 	if !ok {
 		return js.ValueOf("Invalid argument type")
 	}

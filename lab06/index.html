@@ -72,12 +72,6 @@
         WebAssembly.instantiateStreaming(fetch('wasm/lib.wasm'), go.importObject).then(result => {
             go.run(result.instance)
         })
-
-        function checkPrime() {
-            const inputValue = document.getElementById('value').value;
-            const result = CheckPrime(String(inputValue));
-            document.getElementById('answer').innerText = result;
-        }
     </script>
 </head>
 
@@ -85,7 +79,7 @@
     <div class="container">
         <div>
             <input type="number" id="value" />
-            <button id="check" onclick="checkPrime()">Check Prime</button>
+            <button id="check" onclick="CheckPrime()">Check Prime</button>
         </div>
         <div>
             <span id="answer"></span>
