@@ -9,18 +9,10 @@ import (
 func registerCallBacks() {
 	js.Global().Set("CheckPrime", js.FuncOf(CheckPrime))
 }
-func main() {
-	registerCallBacks()
-
-	select {}
-}
 
 func CheckPrime(this js.Value, p []js.Value) interface{} {
-	if len(p) != 1 {
-		return js.ValueOf("Invalid argument count")
-	}
+	js.Global().Get("answer").Set("innerText", "test")
 
-	js.Global().Get("document").Call("getElementById", "answer").Set("innerText", "test")
 	numStr := js.Global().Get("document").Call("getElementById", "value").Get("value").String()
 	num, ok := new(big.Int).SetString(numStr, 10)
 	if !ok {
@@ -54,4 +46,10 @@ func isPrime(n *big.Int) bool {
 
 func updateAnswer(answer string) {
 	js.Global().Get("document").Call("getElementById", "answer").Set("innerText", answer)
+}
+
+func main() {
+	registerCallBacks()
+
+	select {}
 }
