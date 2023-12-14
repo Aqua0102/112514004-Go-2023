@@ -41,7 +41,6 @@ func main() {
 			userID := e.ChildText(".push-userid")
 			content := e.ChildText(".push-content")
 			ipdatetime := e.ChildText(".push-ipdatetime")
-
 			comments = append(comments, Comment{UserID: userID, Content: content, IPDatetime: ipdatetime})
 		}
 	})
