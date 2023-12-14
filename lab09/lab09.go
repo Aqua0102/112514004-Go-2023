@@ -45,7 +45,6 @@ func main() {
 			comments = append(comments, Comment{UserID: userID, Content: content, IPDatetime: ipdatetime})
 		}
 	})
-
 	err := c.Visit(url)
 	if err != nil {
 		fmt.Println("Error:", err)

@@ -7,7 +7,6 @@ on:
   push:
     paths:
       - 'lab09/**'
-
 jobs:
 
   build:
