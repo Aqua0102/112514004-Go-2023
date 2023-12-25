@@ -13,22 +13,22 @@ import (
 	"github.com/reactivex/rxgo/v2"
 )
 
-type client chan<- string // an outgoing message channel
+type client chan<- string
+
 var (
 	entering      = make(chan client)
 	leaving       = make(chan client)
-	messages      = make(chan rxgo.Item) // all incoming client messages
+	messages      = make(chan rxgo.Item)
 	ObservableMsg = rxgo.FromChannel(messages)
 )
 
 func broadcaster() {
-	clients := make(map[client]bool) // all connected clients
+	clients := make(map[client]bool)
 	MessageBroadcast := ObservableMsg.Observe()
 	for {
 		select {
 		case msg := <-MessageBroadcast:
-			// Broadcast incoming message to all
-			// clients' outgoing message channels.
+
 			for cli := range clients {
 				cli <- msg.V.(string)
 			}
@@ -57,7 +57,7 @@ func wshandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ch := make(chan string) // outgoing client messages
+	ch := make(chan string)
 	go clientWriter(conn, ch)
 
 	who := conn.RemoteAddr().String()
@@ -83,19 +83,17 @@ func wshandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func InitObservable() {
-	// Load swear words from the file
+
 	swearWords, err := loadWordsFromFile("swear_word.txt")
 	if err != nil {
 		log.Fatal("Error loading swear words:", err)
 	}
 
-	// Load sensitive names from the file
 	sensitiveNames, err := loadWordsFromFile("sensitive_name.txt")
 	if err != nil {
 		log.Fatal("Error loading sensitive names:", err)
 	}
 
-	// Create the observable for handling messages
 	ObservableMsg = ObservableMsg.
 		Filter(filterSwearWords(swearWords)).
 		Map(mapSensitiveNames(sensitiveNames))
@@ -143,7 +141,6 @@ func loadWordsFromFile(filename string) ([]string, error) {
 	return words, nil
 }
 
-// Function to mask sensitive names with '*'
 func maskName(name string) string {
 	runes := []rune(name)
 	if len(runes) > 1 {
